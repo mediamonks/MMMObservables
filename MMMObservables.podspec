@@ -6,7 +6,7 @@
 Pod::Spec.new do |s|
 
 	s.name = "MMMObservables"
-	s.version = "1.0"
+	s.version = "1.0.2"
 	s.summary = "Basic support for observers and notifications"
 	s.description =  s.summary
 	s.homepage = "https://github.com/mediamonks/#{s.name}"
@@ -35,5 +35,5 @@ Pod::Spec.new do |s|
 		ss.source_files = "Tests/*.{m,swift}"
 	end  
 
-	s.default_subspec = 'Swift'	
+	s.default_subspec = 'ObjC', 'Swift'	
 end
