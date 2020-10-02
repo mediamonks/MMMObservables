@@ -198,9 +198,12 @@ public class LazySimpleEvent: SimpleEventObservable {
 		observerHub.remove(observer)
 	}
 
-	/// Marks the event as 'triggered' so the observers are notified a bit later on the next run loop cycle.
-	public func trigger() {
-		callback.schedule()
+	/// Marks the event as 'triggered' so the observers are notified a bit later on the next run loop cycle
+	/// unless `condition` is `false`.
+	public func trigger(`if` condition: Bool = true) {
+		if condition {
+			callback.schedule()
+		}
 	}
 }
 
