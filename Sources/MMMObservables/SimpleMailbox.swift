@@ -36,14 +36,19 @@ public class SimpleMailbox<T: Equatable> {
 		}
 	}
 
-	/// Takes the current value in the mailbox leaving `nil` here.
+	/// `true`, if there is a value in the mailbox. (Handy when the value itself is an optional.)
+	public var hasValue: Bool {
+		return value != Optional<T>.none // `nil` can trip Swift when T has `.none` member as well
+	}
+
+	/// Returns the current value in the mailbox, if any, taking it by leaving `nil` here.
 	public func take() -> T? {
 		let result = self.value
-		self.value = nil
+		self.value = Optional<T>.none // `nil` can trip Swift when T has `.none` member as well
 		return result
 	}
 
-	/// Replaces the current value in the mailbox with the new one.
+	/// Puts a new value into the mailbox replacing the current value, if any.
 	///
 	/// (Calling it `put()` could imply the possibility of storing multiple values.)
 	public func replace(_ value: T) {
