@@ -54,4 +54,17 @@ public class SimpleMailbox<T: Equatable> {
 	public func replace(_ value: T) {
 		self.value = value
 	}
+
+	/// Puts a new value into the mailbox only if it's empty.
+	///
+	/// - Returns: `true`, if the value has been successfully placed.
+	@discardableResult
+	public func placeIfFits(_ value: T) -> Bool {
+		if !hasValue {
+			self.value = value
+			return true
+		} else {
+			return false
+		}
+	}
 }
