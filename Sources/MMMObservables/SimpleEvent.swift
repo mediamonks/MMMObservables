@@ -38,6 +38,11 @@ public protocol SimpleEventObservable: AnyObject {
 		yourObjectChangeToken = yourObject.changeEvent.addObserver {
 			// ...
 		}
+
+	The initial version has a benefit when `yourObject` is an optional however.
+	In this case `yourObject?.changeEvent.addObserver` always returns something and thus
+	is going to update `yourObjectChangeToken` in any case ensuring you are unsubscribed if `yourObjectChangeToken`
+	had something before. See the version added on the extension of this protocol.
 	*/
 	func addObserver(_ token: inout SimpleEventToken?, _ block: @escaping ObserverBlock)
 
@@ -56,6 +61,19 @@ public protocol SimpleEventObservable: AnyObject {
 
 	/// Removes the observer added earlier via `addObserver()`. Should be called exactly once.
 	func removeObserver(_ observer: SimpleEventObserver)
+}
+
+extension SimpleEventObservable {
+
+	/// A version of `addObserver()` that returns the token instead of updating one by reference.
+	///
+	/// This is more convenient when the observable object might be `nil`: your token is updated in any case
+	/// ensuring you are not subscribed to the previous object.
+	public func addObserver(_ block: @escaping ObserverBlock) -> SimpleEventToken? {
+		var token: SimpleEventToken?
+		self.addObserver(&token, block)
+		return token
+	}
 }
 
 /// A token returned by `SimpleEventObservable.addObserver()` that can be used to remove the added observer either
@@ -116,12 +134,12 @@ public class SimpleEvent: SimpleEventObservable {
 	private var isTriggered = false
 
 	// If greater than zero, then we are within a coalescing ("batch update") block.
-	// If the object is marked as 'triggered' while we are within this block, then the observers won't be notifiied till
-	// we exit the outermost block.
+	// If the object is marked as 'triggered' while we are within this block, then the observers won't be notified
+	// till we exit the outermost block.
 	private var coalescingLevel: Int = 0
 
-	/// In case the event is 'trigerred' one or more times while in this block, then the observers will be notified only
-	/// once and only after the outermost block ends.
+	/// In case the event is 'triggered' one or more times while in this block, then the observers will be
+	/// notified only once and only after the outermost block ends.
 	public func coalescingNotifications(block: () -> ()) {
 
 		coalescingLevel += 1
@@ -139,7 +157,7 @@ public class SimpleEvent: SimpleEventObservable {
 	/// Marks the event as 'triggered' if the given `condition` is `true`. Then, if the event is marked as 'triggered'
 	/// (either now or earlier), it notifies all the observers and resets the 'triggered' state. This is unless
 	/// notifications are being coalesced now via `coalescingNotifications(block:)`, in the latter case only one
-	/// notification will trigger aftet the outermost coalescing block completes.
+	/// notification will trigger after the outermost coalescing block completes.
 	public func trigger(`if` condition: Bool = true) {
 		isTriggered = isTriggered || condition
 		notifyIfNeeded()
@@ -156,7 +174,7 @@ public class SimpleEvent: SimpleEventObservable {
 	}
 }
 
-/// Another implementation of `SimpleEventObservable` that automatically coalescess all calls to `trigger()`
+/// Another implementation of `SimpleEventObservable` that automatically coalesces all calls to `trigger()`
 /// waking up the observers only once on the next cycle of the given dispatch queue (main by default).
 ///
 /// This way `SimpleEvent`'s `coalescingNotifications()` is not needed here and the issue with nested calls
@@ -288,7 +306,7 @@ public class SimpleEventGroupObserver: SimpleEventObserver {
 		resetTimer()
 
 		events.forEach { $0.removeObserver(self) }
-		// To not keep the references and avoid double remvoes.
+		// To not keep the references and avoid double removes.
 		events = []
 	}
 	
