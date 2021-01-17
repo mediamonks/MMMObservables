@@ -15,43 +15,47 @@ import Foundation
 ///
 /// This is one more step towards avoid unbounded queued events in the app. Using a mailbox allows to act on certain
 /// events a bit later than they were emitted.
-public class SimpleMailbox<T: Equatable> {
+public class SimpleMailbox<T> {
 
 	/// The event associated with the mailbox.
 	private let event: LazySimpleEvent
 
-	/// Pass the event that should be triggered when the value in the mailbox changes.
-	/// Have to use "lazy" one here because if putting a value triggers an event where handler takes it,
-	/// then the take is going to trigger a nested notification which is not supported by regular `SimpleEvent`.
+	/// - Parameter event: The event that should be triggered when the value in the mailbox changes.
+	///   Have to use "lazy" version here because putting and taking a value both trigger the same event
+	///   potentially causing "event ping-pong".
 	public init(event: LazySimpleEvent) {
 		self.event = event
 	}
 
-	/// Current value in the mailbox, if any; can be freely peeked at many times by anyone.
+	/// The current value, if any. Anyone can peek at it.
 	public private(set) var value: T? {
 		didSet {
-			if value != oldValue {
-				event.trigger()
-			}
+			event.trigger()
 		}
 	}
 
 	/// `true`, if there is a value in the mailbox. (Handy when the value itself is an optional.)
 	public var hasValue: Bool {
-		return value != Optional<T>.none // `nil` can trip Swift when T has `.none` member as well
+		// Comparing to `nil` can trip Swift when T itself has `.none` case.
+		if case .some = value {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	/// Returns the current value in the mailbox, if any, taking it by leaving `nil` here.
 	public func take() -> T? {
-		let result = self.value
-		self.value = Optional<T>.none // `nil` can trip Swift when T has `.none` member as well
-		return result
+		if let value = self.value {
+			self.value = Optional<T>.none // Again, `nil` can trip Swift when T has `.none` case.
+			return value
+		} else {
+			return Optional<T>.none
+		}
 	}
 
 	/// Puts a new value into the mailbox replacing the current value, if any.
-	///
-	/// (Calling it `put()` could imply the possibility of storing multiple values.)
-	public func replace(_ value: T) {
+	public func replaceEvenIfSame(_ value: T) {
 		self.value = value
 	}
 
@@ -65,6 +69,19 @@ public class SimpleMailbox<T: Equatable> {
 			return true
 		} else {
 			return false
+		}
+	}
+}
+
+extension SimpleMailbox where T: Equatable {
+
+	/// Puts a new value into the mailbox replacing the current one and triggering a notification
+	/// only if the new value differs. This is when `T` is `Equatable`.
+	///
+	/// (Calling it `put()` could imply the possibility of storing multiple values.)
+	public func replace(_ value: T) {
+		if self.value != value {
+			self.value = value
 		}
 	}
 }
