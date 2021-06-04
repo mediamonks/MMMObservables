@@ -6,7 +6,7 @@
 Pod::Spec.new do |s|
 
 	s.name = "MMMObservables"
-	s.version = "1.2.1"
+	s.version = "1.2.2"
 	s.summary = "Basic support for observers and notifications"
 	s.description =  s.summary
 	s.homepage = "https://github.com/mediamonks/#{s.name}"
