@@ -14,9 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate Xcode project
-        run: swift package generate-xcodeproj
       - name: Test
         run: |
           device=`instruments -s -devices | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
-          xcodebuild test -destination "name=$device" -scheme 'MMMObservables-Package'
+          xcodebuild test -destination "name=$device" -scheme 'MMMObservables'

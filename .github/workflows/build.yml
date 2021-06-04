@@ -14,7 +14,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate Xcode project
-        run: swift package generate-xcodeproj
       - name: Build
-        run: xcodebuild build -sdk iphoneos -scheme 'MMMObservables-Package'
+        run: xcodebuild build -sdk iphoneos -scheme 'MMMObservables'
