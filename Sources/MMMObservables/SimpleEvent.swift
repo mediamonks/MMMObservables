@@ -112,9 +112,7 @@ public class SimpleEvent: SimpleEventObservable {
 	// MARK: -
 
 	// Using `ObserverHub` for the implementation as it has some small details ironed out already.
-	private lazy var observerHub = {
-		return ObserverHub<SimpleEventObserver>()
-	}()
+	private lazy var observerHub = ObserverHub<SimpleEventObserver>()
 
 	// MARK: - SimpleEventObservable
 
