@@ -4,7 +4,9 @@ import PackageDescription
 let package = Package(
     name: "MMMObservables",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v11),
+        .watchOS(.v3),
+        .tvOS(.v10)
     ],
     products: [
         .library(
