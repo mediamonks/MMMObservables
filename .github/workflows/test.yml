@@ -16,5 +16,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: |
-          device=`instruments -s -devices | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          device=`xcrun simctl list devices available | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
           xcodebuild test -destination "name=$device" -scheme 'MMMObservables'

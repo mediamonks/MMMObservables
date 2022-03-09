@@ -15,4 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: xcodebuild build -sdk iphoneos -scheme 'MMMObservables'
+        run: |
+          device=`xcrun simctl list devices available | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          xcodebuild build -destination "name=$device" -scheme 'MMMObservables'
