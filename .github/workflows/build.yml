@@ -7,14 +7,42 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    name: Build using any available iPhone simulator
+  build_ios:
+    name: Build iOS
     runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: |
-          device=`xcrun simctl list devices available | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
-          xcodebuild build -destination "name=$device" -scheme 'MMMObservables'
+        run: xcodebuild build -scheme 'MMMObservables' -destination generic/platform=iOS
+
+  build_watchos:
+    name: Build watchOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: xcodebuild build -scheme 'MMMObservables' -destination generic/platform=watchOS
+
+  build_tvos:
+    name: Build tvOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: xcodebuild build -scheme 'MMMObservables' -destination generic/platform=tvOS
+
+  build_macos:
+    name: Build macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: xcodebuild build -scheme 'MMMObservables' -destination generic/platform=macOS

@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    name: Test using any available iPhone simulator
+  build_ios:
+    name: Test iOS
     runs-on: macos-latest
 
     steps:
@@ -18,3 +18,37 @@ jobs:
         run: |
           device=`xcrun simctl list devices available | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
           xcodebuild test -destination "name=$device" -scheme 'MMMObservables'
+
+  build_watchos:
+    name: Test watchOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: |
+          device=`xcrun simctl list devices available | grep -oE 'Apple Watch.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          xcodebuild test -destination "name=$device" -scheme 'MMMObservables'
+
+  build_tvos:
+    name: Test tvOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: |
+          device=`xcrun simctl list devices available | grep -oE 'Apple TV.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          xcodebuild test -destination "name=$device" -scheme 'MMMObservables'
+
+  build_macos:
+    name: Test macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: xcodebuild test -destination 'platform=OS X' -scheme 'MMMObservables'
