@@ -11,7 +11,7 @@ Basic support for observers and notifications.
 
 Podfile:
 
-```
+```ruby
 source 'https://github.com/mediamonks/MMMSpecs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 ...
@@ -19,6 +19,12 @@ pod 'MMMObservables'
 ```
 
 (Use 'MMMObservables/ObjC' when Swift wrappers are not needed.)
+
+SPM:
+
+```swift
+.package(url: "https://github.com/mediamonks/MMMObservables", .upToNextMajor(from: "1.4.1"))
+```
 
 ## Usage
 
