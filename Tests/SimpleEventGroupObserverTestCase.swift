@@ -65,8 +65,8 @@ public final class SimpleEventGroupObserverTestCase: XCTestCase {
         // Since we triggered all 3 events at the same time, we expect
         // the date difference to be around 0.1 seconds (as defined in
         // the debounceTimeout), with a little headroom.
-        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.08)
-        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.12)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.06)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.14)
     }
     
     public func testDebounce() {
@@ -108,8 +108,8 @@ public final class SimpleEventGroupObserverTestCase: XCTestCase {
         // Since we triggered all 3 events with 0.05s between them, we expect
         // the date difference to be around 0.2 seconds (0.1 as defined in
         // the debounceTimeout, + 0.05 and 0.05), with a little headroom.
-        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.18)
-        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.22)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.16)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.24)
     }
     
     public func testLeadingDebounce() {
@@ -152,8 +152,8 @@ public final class SimpleEventGroupObserverTestCase: XCTestCase {
         // Since we triggered all 3 events with 0.05s between them, we expect
         // the date difference to be almost 0, and no events after that; the assertForOverFulfill
         // handles this case.
-        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0)
-        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.01)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) > -0.05)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.05)
     }
     
     public func testThrottle() {
@@ -198,7 +198,7 @@ public final class SimpleEventGroupObserverTestCase: XCTestCase {
         
         // Since we triggered the last event after 0.2s, we expect it to have taken 0.3s for the
         // fulfilment of 2 triggers to have lasted.
-        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.29)
-        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.32)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) > 0.26)
+        XCTAssert(triggerDate.timeIntervalSince(startDate) < 0.34)
     }
 }
