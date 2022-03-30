@@ -8,9 +8,10 @@
 #import "MMMObserverToken.h"
 
 /** 
- * Helps with implementation of observable objects where you need to add/remove observer functionality properly.
- * In most cases an array of weak references would work well enough, but sometimes tricky cases (like removal of
- * observers while they are being notified) should be handled as well.
+ * Helps with implementation of observable objects where you need to ensure that add/remove observer
+ * functionality works properly. In most cases an array of weak references would work well enough, but
+ * sometimes tricky cases (like removal of observers while they are being notified) should be handled
+ * as well.
  *
  * Please note that the helper is not thread-safe, it handles reentrancy, but makes no assumptions about threading.
  *
