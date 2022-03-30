@@ -8,7 +8,7 @@
 #import "MMMObserverToken.h"
 
 /** 
- * Helps with implementation of observable objects where you need to add/remove observer functionality done properly.
+ * Helps with implementation of observable objects where you need to add/remove observer functionality properly.
  * In most cases an array of weak references would work well enough, but sometimes tricky cases (like removal of
  * observers while they are being notified) should be handled as well.
  *
@@ -20,7 +20,7 @@
 @interface MMMObserverHub<__covariant ObserverType:id<NSObject> > : NSObject
 
 /** 
- * Initializes with an optional object for which this observer hub is used. 
+ * Initialises with an optional object for which this observer hub is used.
  * The object will be used only for diagnostics in DEBUG.
  */
 - (id)initWithObservable:(id<NSObject>)observable NS_DESIGNATED_INITIALIZER;

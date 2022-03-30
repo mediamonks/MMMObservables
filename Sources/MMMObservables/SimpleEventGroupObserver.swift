@@ -5,32 +5,86 @@
 
 /// You pass an array of `SimpleEventObservable`'s and it listens to them all.
 ///
-/// By default it will debounce the events, so if you have 5 events firing at the same time, you won't
-/// get 5 callbacks, but just one after the `debounceTimeout` has passed. (The latter is 0 by default, so
-/// on the next cycle of the run loop.)
+/// It will collect all events that occur and forward them to a single callback. If you supply
+/// a `debounceTimeout` it will also debounce events. You can supply a specific policy for
+/// the debounce method.
+///
+/// **Debounce Policy:**
+///  - `default` will reset the timer every time one of the events trigger;
+///  - `debounceLeading` will trigger the first time, but will ignore all future triggers for the duration of `debounceTimeout`;
+///  - `throttle` will trigger events at most every `debounceTimeout` seconds.
+///
+/// **Example:**
+/// ```
+/// let observer = SimpleEventGroupObserver(events: event1, event2, event3) { _ in
+///     // If any of the events trigger at the same time, we get only a single callback.
+/// }
+///
+/// let debounceObserver = SimpleEventGroupObserver(
+///     events: event1, event2, event3,
+///     debounceTimeout: 0.1,
+///     debouncePolicy: .throttle
+/// ) { _ in
+///     // If every event triggers at random within 1 seconds, this callback will be called
+///     // at most every 0.1 seconds.
+/// }
+/// ```
 public final class SimpleEventGroupObserver: SimpleEventObserver {
-	
-	private let debounceTimeout: TimeInterval?
+    
+    /// What type of policy we should use for debouncing events.
+    public enum DebouncePolicy {
+        /// A default `debounce` method, every time one of the events trigger, the timer will be reset.
+        case `default`
+        /// The first time an event triggers, we call it straight away, but wait ignore all triggers for `debounceTimeout`.
+        case debounceLeading
+        /// Call events at most every `debounceTimeout` seconds.
+        case throttle
+    }
+    
 	private var events: [SimpleEventObservable]
-	private let block: (SimpleEventObservable) -> ()
+	private let block: ([SimpleEventObservable]) -> ()
 	
-	private var debounceTimer: Timer?
-	
+    private let debounceTimeout: TimeInterval
+    private let debouncePolicy: DebouncePolicy
+    
 	/// - Parameters:
 	///   - events: Events to listen to.
-	///   - debounceTimeout: The amount of time to debounce for; `nil` if you don't want any debouncing.
+	///   - debounceTimeout: The amount of time to debounce for; `0` if you don't want any debouncing.
+    ///   - debouncePolicy: How we should debounce, have a look at the ``DebouncePolicy`` cases for more info.
 	///   - block: The callback block to call when a/multiple events fired.
 	public init(
 		events: [SimpleEventObservable],
-		debounceTimeout: TimeInterval? = 0,
-		block: @escaping (SimpleEventObservable) -> ()
+		debounceTimeout: TimeInterval = 0,
+        debouncePolicy: DebouncePolicy = .default,
+		block: @escaping ([SimpleEventObservable]) -> ()
 	) {
 		self.events = events
-		self.debounceTimeout = debounceTimeout
 		self.block = block
+        
+        self.debounceTimeout = debounceTimeout
+        self.debouncePolicy = debouncePolicy
 		
 		events.forEach { $0.addObserver(self) }
 	}
+    
+    /// - Parameters:
+    ///   - events: Events to listen to.
+    ///   - debounceTimeout: The amount of time to debounce for; `0` if you don't want any debouncing.
+    ///   - debouncePolicy: How we should debounce, have a look at the ``DebouncePolicy`` cases for more info.
+    ///   - block: The callback block to call when a/multiple events fired.
+    public convenience init(
+        events: SimpleEventObservable...,
+        debounceTimeout: TimeInterval = 0,
+        debouncePolicy: DebouncePolicy = .default,
+        block: @escaping ([SimpleEventObservable]) -> ()
+    ) {
+        self.init(
+            events: events,
+            debounceTimeout: debounceTimeout,
+            debouncePolicy: debouncePolicy,
+            block: block
+        )
+    }
 	
 	deinit {
 		remove()
@@ -48,31 +102,68 @@ public final class SimpleEventGroupObserver: SimpleEventObserver {
 		events.removeAll()
 	}
 	
-	// MARK: -
+	// MARK: - SimpleEventObserver
+    
+    private lazy var coalescing = CoalescingCallback { [weak self] in
+        guard let self = self else {
+            assertionFailure("Lost self in callback?")
+            return
+        }
+        self.block(self.events)
+        
+        // We reset the throttle inside the coalescing callback to make sure we're
+        // actually finished.
+        self.throttlePaused = false
+    }
+    
+    private var timer: Timer?
+    private var throttlePaused: Bool = false
+    
 	public func simpleEventDidTrigger(_ event: SimpleEventObservable) {
 
-		guard let interval = debounceTimeout else {
-			block(event)
+		guard debounceTimeout > 0 else {
+            coalescing.schedule()
 			return
 		}
-		
-		resetTimer()
-		
-		let timer = Timer(timeInterval: interval, repeats: false) { [weak self] _ in
-			self?.block(event)
-		}
-		
-		debounceTimer = timer
-
-		#if swift(>=4.2)
-			RunLoop.main.add(timer, forMode: .common)
-		#else
-			RunLoop.main.add(timer, forMode: .commonModes)
-		#endif
+        
+        switch debouncePolicy {
+        case .default:
+            
+            resetTimer()
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: debounceTimeout, repeats: false) { [weak self] _ in
+                self?.coalescing.schedule()
+            }
+            
+        case .debounceLeading:
+            
+            if timer == nil {
+                coalescing.schedule()
+            } else {
+                resetTimer()
+            }
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: debounceTimeout, repeats: false) { [weak self] _ in
+                self?.resetTimer()
+            }
+            
+        case .throttle:
+            
+            guard !throttlePaused else {
+                // We don't do anything, we're throttling right now.
+                return
+            }
+            
+            throttlePaused = true
+            
+            self.timer = Timer.scheduledTimer(withTimeInterval: debounceTimeout, repeats: false) { [weak self] _ in
+                self?.coalescing.schedule()
+            }
+        }
 	}
 	
 	private func resetTimer() {
-		debounceTimer?.invalidate()
-		debounceTimer = nil
+        timer?.invalidate()
+        timer = nil
 	}
 }
