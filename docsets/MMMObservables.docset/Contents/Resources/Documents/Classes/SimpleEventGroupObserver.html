@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SimpleEventGroupObserver Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/SimpleEventGroupObserver" class="dashAnchor"></a>
+    <a title="SimpleEventGroupObserver Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MMMObservables Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        SimpleEventGroupObserver Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SimpleEventGroupObserver</h1>
+            <p>You pass an array of <code><a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code>&lsquo;s and it listens to them all.</p>
+
+<p>It will collect all events that occur and forward them to a single callback. If you supply
+a <code>debounceTimeout</code> it will also debounce events. You can supply a specific policy for
+the debounce method.</p>
+
+<p><strong>Debounce Policy:</strong></p>
+
+<ul>
+<li><code>default</code> will reset the timer every time one of the events trigger;</li>
+<li><code>debounceLeading</code> will trigger the first time, but will ignore all future triggers for the duration of <code>debounceTimeout</code>;</li>
+<li><code>throttle</code> will trigger events at most every <code>debounceTimeout</code> seconds.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">observer</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// If any of the events trigger at the same time, we get only a single callback.</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">debounceObserver</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span>
+    <span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">,</span>
+    <span class="nv">debounceTimeout</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="nv">debouncePolicy</span><span class="p">:</span> <span class="o">.</span><span class="n">throttle</span>
+<span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// If every event triggers at random within 1 seconds, this callback will be called</span>
+    <span class="c1">// at most every 0.1 seconds.</span>
+<span class="p">}</span>
+</code></pre>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Enum/DebouncePolicy" class="dashAnchor"></a>
+                    <a class="token" href="#/">DebouncePolicy</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>What type of policy we should use for debouncing events.</p>
+
+                        <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/init(events:debounceTimeout:debouncePolicy:block:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">init(events:<wbr>debounceTimeout:<wbr>debouncePolicy:<wbr>block:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/remove()" class="dashAnchor"></a>
+                    <a class="token" href="#/">remove()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the listeners.</p>
+
+<p>Safe to call multiple times, also called automatically when the object is deallocated.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/SimpleEventObserver"></a>
+                <a name="//apple_ref/swift/Section/SimpleEventObserver" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/SimpleEventObserver"></a>
+                  <h3 class="section-name"><span>SimpleEventObserver</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/simpleEventDidTrigger(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">simpleEventDidTrigger(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LazySimpleEvent Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/LazySimpleEvent" class="dashAnchor"></a>
+    <a title="LazySimpleEvent Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MMMObservables Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        LazySimpleEvent Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LazySimpleEvent</h1>
+            <p>Another implementation of <code><a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code> that automatically coalesces all calls to <code>trigger()</code>
+waking up the observers only once on the next cycle of the given dispatch queue (main by default).</p>
+
+<p>This way <code><a href="../Classes/SimpleEvent.html">SimpleEvent</a></code>&lsquo;s <code>coalescingNotifications()</code> is not needed here and the issue with nested calls
+is automatically avoided.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/init(queue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">init(queue:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The event is going to be scheduled on the specified queue.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/SimpleEventObservable"></a>
+                <a name="//apple_ref/swift/Section/SimpleEventObservable" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/SimpleEventObservable"></a>
+                  <h3 class="section-name"><span>SimpleEventObservable</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/addObserver(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">addObserver(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/addObserver(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">addObserver(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/removeObserver(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">removeObserver(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/trigger(if:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">trigger(if:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Marks the event as &lsquo;triggered&rsquo; so the observers are notified a bit later on the next run loop cycle
+unless <code>condition</code> is <code>false</code>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

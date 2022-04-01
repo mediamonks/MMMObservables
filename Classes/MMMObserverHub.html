@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MMMObserverHub Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/MMMObserverHub" class="dashAnchor"></a>
+    <a title="MMMObserverHub Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MMMObservables Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        MMMObserverHub Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>MMMObserverHub</h1>
+              <div class="declaration">
+                <div class="language">
+                  <p class="aside-title">Objective-C</p>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">MMMObserverHub</span><span class="o">&lt;</span><span class="n">__covariant</span> <span class="n">ObserverType</span> <span class="o">:</span> <span class="n">id</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;&gt;</span> <span class="o">:</span> <span class="n">NSObject</span></code></pre>
+
+                </div>
+                <div class="language">
+                  <p class="aside-title">Swift</p>
+                  <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MMMObserverHub</span><span class="o">&lt;</span><span class="kt">ObserverType</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">NSObject</span> <span class="k">where</span> <span class="kt">ObserverType</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                </div>
+              </div>
+            <p>Helps with implementation of observable objects where you need to ensure that add/remove observer
+ functionality works properly. In most cases an array of weak references would work well enough, but
+ sometimes tricky cases (like removal of observers while they are being notified) should be handled
+ as well.</p>
+
+<p>Please note that the helper is not thread-safe, it handles reentrancy, but makes no assumptions about threading.</p>
+
+<p>A class using this helper will typically expose its own add/remove observer methods, will forward their invocation
+ to a private instance of this helper, and will use forEachObserver: to notify all the registered observers.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)initWithObservable:"></a>
+                    <a name="//apple_ref/swift/Method/-initWithObservable:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(im)initWithObservable:">-initWithObservable:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialises with an optional object for which this observer hub is used.
+The object will be used only for diagnostics in DEBUG.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="nf">initWithObservable</span><span class="p">:(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span><span class="p">)</span><span class="nv">observable</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="o">!</span><span class="p">(</span><span class="nv">observable</span><span class="p">:</span> <span class="kt">NSObjectProtocol</span><span class="o">!</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)init"></a>
+                    <a name="//apple_ref/swift/Method/-init" class="dashAnchor"></a>
+                    <a class="token discouraged" href="#/c:objc(cs)MMMObserverHub(im)init">-init</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="aside aside-unavailable">
+                        <p class="aside-title">Unavailable</p>
+                        
+                      </div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">init</span> <span class="n">NS_UNAVAILABLE</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(py)empty"></a>
+                    <a name="//apple_ref/swift/Property/empty" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(py)empty">empty</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>YES, when no observers are added to the hub now. This is somewhat internal, but can be handy to know.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="n">isEmpty</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">empty</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isEmpty</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)safeAddObserver:"></a>
+                    <a name="//apple_ref/swift/Method/-safeAddObserver:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(im)safeAddObserver:">-safeAddObserver:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds an observer and returns a token which should be used to remove it.
+The observer is removed once the token is deallocated or token&rsquo;s #removeObserver method is called.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a></span><span class="o">&gt;</span><span class="p">)</span><span class="nf">safeAddObserver</span><span class="p">:(</span><span class="n">ObserverType</span><span class="p">)</span><span class="nv">observer</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">safeAddObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">ObserverType</span><span class="o">!</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a></span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)addObserver:"></a>
+                    <a name="//apple_ref/swift/Method/-addObserver:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(im)addObserver:">-addObserver:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds an observer to the hub and returns YES.</p>
+
+<p>The same observer is not allowed to be added twice; every observer must be removed before the observer
+ or the hub is deallocated.
+ Returns NO in case the above is not followed and assertions are disabled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">addObserver</span><span class="p">:(</span><span class="n">ObserverType</span><span class="p">)</span><span class="nv">observer</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">ObserverType</span><span class="o">!</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)removeObserver:"></a>
+                    <a name="//apple_ref/swift/Method/-removeObserver:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(im)removeObserver:">-removeObserver:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes an observer from the hub and returns YES.</p>
+
+<p>Trying to remove an object that has already been removed (or has never been installed) is considered a programmer&rsquo;s
+ error and will crash in DEBUG; NO is returned in case assertions are disabled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">removeObserver</span><span class="p">:(</span><span class="n">ObserverType</span><span class="p">)</span><span class="nv">observer</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removeObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">ObserverType</span><span class="o">!</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub(im)forEachObserver:"></a>
+                    <a name="//apple_ref/swift/Method/-forEachObserver:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub(im)forEachObserver:">-forEachObserver:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Runs the given block for each of the observers ensuring removals and additions of observers done meanwhile
+are handled correctly.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">forEachObserver</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">ObserverType</span><span class="p">))</span><span class="nv">block</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">forEachObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">block</span><span class="p">:</span> <span class="p">((</span><span class="kt">ObserverType</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span><span class="o">!</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

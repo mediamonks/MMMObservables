@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MMMObservables  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a title="MMMObservables  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">MMMObservables Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+        MMMObservables  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='mmmobservables' class='heading'>MMMObservables</h1>
+
+<p><a href="https://github.com/mediamonks/MMMObservables/actions?query=workflow%3ABuild"><img src="https://github.com/mediamonks/MMMObservables/workflows/Build/badge.svg" alt="Build"></a>
+<a href="https://github.com/mediamonks/MMMObservables/actions?query=workflow%3ATest"><img src="https://github.com/mediamonks/MMMObservables/workflows/Test/badge.svg" alt="Test"></a></p>
+
+<p>Basic support for observers and notifications.</p>
+
+<p>(This is a part of <code>MMMTemple</code> suite of iOS libraries we use at <a href="https://www.mediamonks.com/">MediaMonks</a>.)</p>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>Podfile:</p>
+<pre class="highlight ruby"><code><span class="n">source</span> <span class="s1">'https://github.com/mediamonks/MMMSpecs.git'</span>
+<span class="n">source</span> <span class="s1">'https://github.com/CocoaPods/Specs.git'</span>
+<span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">pod</span> <span class="s1">'MMMObservables'</span>
+</code></pre>
+
+<p>(Use &lsquo;MMMObservables/ObjC&rsquo; when Swift wrappers are not needed.)</p>
+
+<p>SPM:</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/mediamonks/MMMObservables"</span><span class="p">,</span> <span class="o">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"1.5.0"</span><span class="p">))</span>
+</code></pre>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>MMMObservables is a collection of classes to help you track changes in an object where the usual
+delegate pattern doesn&rsquo;t fit. Either due to the changes being very simple, or due to the fact that
+you can only have a single observer.</p>
+<h3 id='observerhub' class='heading'>ObserverHub</h3>
+
+<p>Helps with implementation of observable objects where you need to ensure that add/remove observer 
+functionality works properly. In most cases an array of weak references would work well enough, but 
+sometimes tricky cases (like removal of observers while they are being notified) should be handled 
+as well.</p>
+
+<p>Please note that the helper is not thread-safe, it handles reentrancy, but makes no assumptions
+about threading.</p>
+
+<p>A class using this helper will typically expose its own add/remove observer methods, will forward
+their invocation to a private instance of this helper, and will use <code>forEach</code> to notify all
+the registered observers.</p>
+
+<p>Properties:</p>
+
+<ul>
+<li>Observers are referenced weakly.</li>
+<li>If an observer is added/removed during a notification cycle, then it won&rsquo;t be called during this cycle.</li>
+<li>Thread-safety (if ever needed) should be handled by the user of the class.</li>
+</ul>
+
+<p>Flags the following conditions in debug builds:</p>
+
+<ul>
+<li>Observers added more than once.</li>
+<li>Observers not being of reference types (so structs cannot be accidentally installed as observers).</li>
+<li>Observers removed more than once (or tried to be removed without being added first).</li>
+<li>Observers not explicitly removed before their deallocation.</li>
+<li>Nested notification cycles.</li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> Use <code><a href="Classes/MMMObserverHub.html">MMMObserverHub</a></code> if you&rsquo;re using Objective-C. Have a look at <code>MMMObserverHub.h</code> for
+more details on that.</p>
+</blockquote>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MyObjectObserverProtocol</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">didUpdate</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="kt">ChildObject</span><span class="p">)</span>
+    <span class="kd">func</span> <span class="nf">didRemove</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="kt">ChildObject</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">MyObject</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">hub</span> <span class="o">=</span> <span class="kt">ObserverHub</span><span class="o">&lt;</span><span class="kt">MyObjectObserverProtocol</span><span class="o">&gt;</span><span class="p">()</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// We call the methods like you would on a delegate.</span>
+        <span class="n">hub</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="nf">didUpdate</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="n">bar</span><span class="p">)</span> <span class="p">}</span>
+        <span class="n">hub</span><span class="o">.</span><span class="n">forEach</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="nf">didRemove</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="n">baz</span><span class="p">)</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Add public functions to add/remove observers so we can keep the `hub` private, otherwise</span>
+    <span class="c1">// outside users of this class can access the observers, we don't want that.</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">MyObjectObserverProtocol</span><span class="p">)</span> <span class="p">{</span> <span class="n">hub</span><span class="o">.</span><span class="nf">add</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span> <span class="p">}</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeObserver</span><span class="p">(</span><span class="n">_</span> <span class="nv">observer</span><span class="p">:</span> <span class="kt">MyObjectObserverProtocol</span><span class="p">)</span> <span class="p">{</span> <span class="n">hub</span><span class="o">.</span><span class="nf">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// The class that observes 'MyObject'.</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">MyListener</span><span class="p">:</span> <span class="kt">MyObjectObserverProtocol</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">object</span> <span class="o">=</span> <span class="kt">MyObject</span><span class="p">()</span>
+
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// You can add the observer whenever you want, but only once.</span>
+        <span class="n">object</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">deinit</span> <span class="p">{</span>
+        <span class="c1">// It's required to remove the observer exactly once.</span>
+        <span class="n">object</span><span class="o">.</span><span class="nf">removeObserver</span><span class="p">(</span><span class="k">self</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// MARK: - MyObjectObserverProtocol</span>
+
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">didUpdate</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="kt">ChildObject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">didRemove</span><span class="p">(</span><span class="nv">object</span><span class="p">:</span> <span class="kt">ChildObject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='simpleevent' class='heading'>SimpleEvent</h3>
+
+<p>A point where multiple observers can register to be notified when the corresponding object or its 
+parts might need attention (aka &lsquo;signal&rsquo;, &lsquo;event&rsquo;, etc in other libs).</p>
+
+<p>Note that the observers might be notified much later than the actual event happened and multiple
+&ldquo;need attention&rdquo; events might be combined into one. Use regular observers/delegates in case every
+event counts or needs to be reacted upon immediately.</p>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code>
+<span class="c1">// In this example we use a ViewModel and Views, but the idiom can be used throughout.</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ViewModel</span> <span class="p">{</span>
+
+    <span class="c1">// For this example, when this changes, didChange will trigger.</span>
+    <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+
+    <span class="c1">// The 'observable' part, in most cases you only want your users to observe the changes,</span>
+    <span class="c1">// without the ability to trigger changes from the outside.</span>
+    <span class="k">var</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">SimpleEventObservable</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">DefaultViewModel</span><span class="p">:</span> <span class="kt">ViewModel</span> <span class="p">{</span>
+
+    <span class="c1">// We use a private `SimpleEvent` and only provide the `SimpleEventObservable` publicly.</span>
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">_didChange</span> <span class="o">=</span> <span class="kt">SimpleEvent</span><span class="p">()</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">SimpleEventObservable</span> <span class="p">{</span> <span class="n">_didChange</span> <span class="p">}</span>
+
+    <span class="c1">// In this case we trigger the didChange event when the title actually changes.</span>
+    <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"Initial title"</span> <span class="p">{</span> 
+        <span class="k">didSet</span> <span class="p">{</span>
+            <span class="n">_didChange</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">if</span><span class="p">:</span> <span class="n">title</span> <span class="o">!=</span> <span class="n">oldValue</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">...</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// This will trigger the event.</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s">"Updated title"</span>
+
+        <span class="c1">// If update() is being re-triggered 'down the line' by this `SimpleEvent`, </span>
+        <span class="c1">// it results in nested notifications. This is not allowed by `SimpleEvent`, </span>
+        <span class="c1">// look at `LazySimpleEvent` instead.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// The 'user' of the ViewModel, a View in this case, but could be anything that's </span>
+<span class="c1">// interested in changes in the ViewModel (e.g. ViewController, Flow / Presenter).</span>
+<span class="kd">internal</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">View</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">viewModel</span><span class="p">:</span> <span class="kt">ViewModel</span>
+
+    <span class="c1">// We store the change handler in a token. The token will remove the observer </span>
+    <span class="c1">// upon `deinit` or by calling `.remove()`, this ensures that the observer is</span>
+    <span class="c1">// removed when the view deallocates. </span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">viewModelDidChange</span><span class="p">:</span> <span class="kt">SimpleEventToken</span><span class="p">?</span>
+
+    <span class="o">...</span>
+
+    <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">viewModel</span><span class="p">:</span> <span class="kt">ViewModel</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span> <span class="o">=</span> <span class="n">viewModel</span>
+
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="o">.</span><span class="n">zero</span><span class="p">)</span>
+
+        <span class="o">...</span>
+
+        <span class="c1">// Now we can attach a listener to the didChange event to update our UI.</span>
+        <span class="c1">// </span>
+        <span class="c1">// It's critical to store the token, otherwise it will deallocate and </span>
+        <span class="c1">// remove the observer straight away.</span>
+        <span class="n">viewModel</span><span class="o">.</span><span class="n">didChange</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">viewModelDidChange</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="n">_</span> <span class="k">in</span>
+            <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="nf">updateUI</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="c1">// You usually want to update your state in any case.</span>
+        <span class="nf">updateUI</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">updateUI</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// For instance:</span>
+        <span class="n">titleLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">viewModel</span><span class="o">.</span><span class="n">title</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='lazysimpleevent-coalescingcallback' class='heading'>LazySimpleEvent + CoalescingCallback</h3>
+
+<p>The <code><a href="Classes/CoalescingCallback.html">CoalescingCallback</a></code> coalesces several calls of the same block on the given queue. Handy when 
+you need to do a single thing in response to many async events and it does not matter how many of
+them or how many times they have occurred.</p>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code><span class="c1">// We can specify the queue we should use to handle the events, defaults to `main`.</span>
+<span class="k">let</span> <span class="nv">callback</span> <span class="o">=</span> <span class="kt">CoalescingCallback</span><span class="p">(</span><span class="nv">queue</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">foo</span> <span class="p">{</span>
+    <span class="n">callback</span><span class="o">.</span><span class="nf">schedule</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">bar</span> <span class="p">{</span>
+    <span class="n">callback</span><span class="o">.</span><span class="nf">schedule</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1">// If `foo` and `bar` are both `true`, the callback will only execute once, resulting</span>
+<span class="c1">// in a single call to update().</span>
+<span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Only called once.</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The <code><a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a></code> is similar to <code><a href="Classes/SimpleEvent.html">SimpleEvent</a></code>, however it automatically coalesces all
+calls to <code>trigger()</code> waking up the observers only once on the next cycle of the given
+dispatch queue (main by default).</p>
+
+<p>This way <code><a href="Classes/SimpleEvent.html">SimpleEvent</a></code>&lsquo;s <code>coalescingNotifications()</code> is not needed here and the issue with
+nested calls is automatically avoided.</p>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code>
+<span class="kd">class</span> <span class="kt">Foo</span> <span class="p">{</span>
+
+    <span class="k">let</span> <span class="nv">event</span> <span class="o">=</span> <span class="kt">LazySimpleEvent</span><span class="p">()</span>
+
+    <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">foo</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"a"</span> <span class="p">{</span>
+        <span class="k">didSet</span> <span class="p">{</span>
+            <span class="n">event</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">if</span><span class="p">:</span> <span class="n">foo</span> <span class="o">!=</span> <span class="n">oldValue</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">bar</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"a"</span> <span class="p">{</span>
+        <span class="k">didSet</span> <span class="p">{</span>
+            <span class="n">event</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">if</span><span class="p">:</span> <span class="n">bar</span> <span class="o">!=</span> <span class="n">oldValue</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">...</span>
+
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// If parent.didChange triggers a change here as well, this would cause nested</span>
+        <span class="c1">// notifications. Since we're using `LazySimpleEvent` this is no problem.</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">didChange</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">barDidChange</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="n">_</span> <span class="k">in</span>
+            <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Update get's called from a SimpleEvent, but will handle the nesting gracefully.</span>
+        <span class="c1">//</span>
+        <span class="c1">// This is where LazySimpleEvent also comes in handy, we set the values,</span>
+        <span class="c1">// this triggers multiple calls to the event.trigger(), however, the event</span>
+        <span class="c1">// will only trigger once.</span>
+
+        <span class="n">foo</span> <span class="o">=</span> <span class="s">"b"</span>
+        <span class="n">bar</span> <span class="o">=</span> <span class="s">"c"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='simpleeventproxy' class='heading'>SimpleEventProxy</h3>
+
+<p>You pass an array of <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code>&rsquo;s and it fires a single event if one of them
+fires, it does this lazily.</p>
+
+<p>This fixes the issue where you attach listeners to multiple events only to trigger a single
+event (e.g. inside your <code>ViewModel</code>); since it inherits from <code><a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a></code> you can trigger
+the proxy itself as well, this is intentional.</p>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code><span class="c1">// Create a private proxy to trigger from 'inside' the model. The simple event</span>
+<span class="c1">// will trigger when parent &amp; child changes, or if we trigger it ourself.</span>
+<span class="kd">private</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">proxy</span> <span class="o">=</span> <span class="kt">SimpleEventProxy</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="n">parent</span><span class="o">.</span><span class="n">didChange</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">didChange</span><span class="p">)</span>
+
+<span class="c1">// Change handler for the 'outside'.</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">SimpleEventObservable</span> <span class="p">{</span> <span class="n">proxy</span> <span class="p">}</span>
+
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// In case we have changes as well:</span>
+    <span class="n">proxy</span><span class="o">.</span><span class="nf">trigger</span><span class="p">(</span><span class="nv">if</span><span class="p">:</span> <span class="n">changed</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='simpleeventgroupobserver' class='heading'>SimpleEventGroupObserver</h3>
+
+<p>You pass an array of <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code>&rsquo;s and it listens to them all.</p>
+
+<p>It will collect all events that occur and forward them to a single callback. If you supply
+a <code>debounceTimeout</code> it will also debounce events. You can supply a specific policy for
+the debounce method.</p>
+
+<p><strong>Debounce Policy:</strong></p>
+
+<ul>
+<li><code>default</code> will reset the timer every time one of the events trigger;</li>
+<li><code>debounceLeading</code> will trigger the first time, but will ignore all future triggers for the duration of <code>debounceTimeout</code>;</li>
+<li><code>throttle</code> will trigger events at most every <code>debounceTimeout</code> seconds.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">observer</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// If any of the events trigger at the same time, we get only a single callback.</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">debounceObserver</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span>
+    <span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">,</span>
+    <span class="nv">debounceTimeout</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="nv">debouncePolicy</span><span class="p">:</span> <span class="o">.</span><span class="n">throttle</span>
+<span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// It doesn't matter how often the events trigger, this callback will be called</span>
+    <span class="c1">// at most every 0.1 seconds.</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='simplemailbox' class='heading'>SimpleMailbox</h3>
+
+<p>A box where somebody can put a value replacing whatever was there before, and somebody 
+else can later check it and/or take it with them. (Essentially a non-blocking, 
+non-thread-safe queue of 1 element.)</p>
+
+<p>Change notifications are performed via an event owned by the object hosting the mailbox.</p>
+
+<p>This is one more step towards avoid unbounded queued events in the app. Using a mailbox
+allows to act on certain events a bit later than they were emitted.</p>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code>
+<span class="c1">// Something that provides and populates the mailbox.</span>
+<span class="kd">class</span> <span class="kt">Foo</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">_didChange</span> <span class="o">=</span> <span class="kt">LazySimpleEvent</span><span class="p">()</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">SimpleEventObservable</span> <span class="p">{</span> <span class="n">_didChange</span> <span class="p">}</span>
+
+    <span class="c1">// Initialise your mailbox, using lazy here so we can access `self._didChange`.</span>
+    <span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">mailbox</span> <span class="o">=</span> <span class="kt">SimpleMailbox</span><span class="o">&lt;</span><span class="kt">Bar</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="n">_didChange</span><span class="p">)</span>
+
+    <span class="o">...</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Let's place something in the mailbox, someone else should process `Bar`.</span>
+        <span class="n">mailbox</span><span class="o">.</span><span class="nf">placeIfFits</span><span class="p">(</span><span class="kt">Bar</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Something that acts on the mail being received.</span>
+<span class="kd">class</span> <span class="kt">Listener</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">foo</span> <span class="o">=</span> <span class="kt">Foo</span><span class="p">()</span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">fooDidChange</span><span class="p">:</span> <span class="kt">SimpleEventToken</span><span class="p">?</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">observeFoo</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// We listen to changes using the didChange event.</span>
+        <span class="n">foo</span><span class="o">.</span><span class="n">didChange</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fooDidChange</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="n">_</span> <span class="k">in</span>
+            <span class="k">self</span><span class="p">?</span><span class="o">.</span><span class="nf">update</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Now we can check if Foo left us something in the mailbox, if so; we take it!</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">mailbox</span><span class="o">.</span><span class="nf">take</span><span class="p">()</span> <span class="p">{</span>
+            <span class="c1">// Great, we have a message, do something with `bar`.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='ready-for-liftoff' class='heading'>Ready for liftoff? 🚀</h2>
+
+<p>We&rsquo;re always looking for talent. Join one of the fastest-growing rocket ships in
+the business. Head over to our <a href="https://media.monks.com/careers">careers page</a>
+for more info!</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

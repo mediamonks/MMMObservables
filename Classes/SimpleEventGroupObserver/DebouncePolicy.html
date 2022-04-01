@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DebouncePolicy Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+    <script src="../../js/lunr.min.js" defer></script>
+    <script src="../../js/typeahead.jquery.js" defer></script>
+    <script src="../../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/DebouncePolicy" class="dashAnchor"></a>
+    <a title="DebouncePolicy Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../index.html">MMMObservables Reference</a>
+        <img id="carat" src="../../img/carat.png" alt=""/>
+        DebouncePolicy Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>DebouncePolicy</h1>
+            <p>What type of policy we should use for debouncing events.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Element/default" class="dashAnchor"></a>
+                    <a class="token" href="#/">default</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A default <code>debounce</code> method, every time one of the events trigger, the timer will be reset.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Element/debounceLeading" class="dashAnchor"></a>
+                    <a class="token" href="#/">debounceLeading</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The first time an event triggers, we call it straight away, but wait ignore all triggers for <code>debounceTimeout</code>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Element/throttle" class="dashAnchor"></a>
+                    <a class="token" href="#/">throttle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Call events at most every <code>debounceTimeout</code> seconds.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

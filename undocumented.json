@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/MMMObservables/MMMObservables/Sources/MMMObservablesObjC/MMMObserverHub.h",
+      "line": 29,
+      "symbol": "MMMObserverHub.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/MMMObservables/MMMObservables"
+}

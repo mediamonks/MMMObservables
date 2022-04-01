@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classes  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
+    <a title="Classes  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">MMMObservables Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+        Classes  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Classes</h1>
+            <p>The following classes are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)MMMObserverHub"></a>
+                    <a name="//apple_ref/swift/Class/MMMObserverHub" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)MMMObserverHub">MMMObserverHub</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Helps with implementation of observable objects where you need to ensure that add/remove observer
+ functionality works properly. In most cases an array of weak references would work well enough, but
+ sometimes tricky cases (like removal of observers while they are being notified) should be handled
+ as well.</p>
+
+<p>Please note that the helper is not thread-safe, it handles reentrancy, but makes no assumptions about threading.</p>
+
+<p>A class using this helper will typically expose its own add/remove observer methods, will forward their invocation
+ to a private instance of this helper, and will use forEachObserver: to notify all the registered observers.</p>
+
+                        <a href="Classes/MMMObserverHub.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">MMMObserverHub</span><span class="o">&lt;</span><span class="n">__covariant</span> <span class="n">ObserverType</span> <span class="o">:</span> <span class="n">id</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;&gt;</span> <span class="o">:</span> <span class="n">NSObject</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MMMObserverHub</span><span class="o">&lt;</span><span class="kt">ObserverType</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">NSObject</span> <span class="k">where</span> <span class="kt">ObserverType</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/SimpleEventProxy" class="dashAnchor"></a>
+                    <a class="token" href="#/">SimpleEventProxy</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You pass an array of <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code>&lsquo;s and it fires a single event if one of them fires, it does this lazily.</p>
+
+<p>This fixes the issue where you attach listeners to multiple events only to trigger a single event (e.g. inside your
+<code>ViewModel</code>); since it inherits from <code><a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a></code> you can trigger the proxy itself as well, this is intentional.</p>
+
+<p><strong>Example usage</strong></p>
+<pre class="highlight swift"><code><span class="c1">// Create a private proxy to trigger from 'inside' the model.</span>
+<span class="kd">private</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">proxy</span> <span class="o">=</span> <span class="kt">SimpleEventProxy</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="n">parent</span><span class="o">.</span><span class="n">didChange</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">didChange</span><span class="p">)</span>
+
+<span class="c1">// Change handler for the 'outside'.</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">didChange</span><span class="p">:</span> <span class="kt">SimpleEventObservable</span> <span class="p">{</span> <span class="n">proxy</span> <span class="p">}</span>
+</code></pre>
+
+                        <a href="Classes/SimpleEventProxy.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/CoalescingCallback" class="dashAnchor"></a>
+                    <a class="token" href="#/">CoalescingCallback</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Coalesces several calls of the same block on the given queue.</p>
+
+<p>Handy when need to do a single thing in response to many async events and it does not matter how many of them
+or how many times they have occurred.</p>
+
+                        <a href="Classes/CoalescingCallback.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/SimpleMailbox" class="dashAnchor"></a>
+                    <a class="token" href="#/">SimpleMailbox</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A box where somebody can put a value replacing whatever was there before, and somebody else can later check it
+and/or take with them. (Essentially a non-blocking, non-thread-safe queue of 1 element.)</p>
+
+<p>Change notifications are performed via an event owned by the object hosting the mailbox.</p>
+
+<p>I am not splitting it into &ldquo;taking&rdquo; and &ldquo;placing parts&rdquo; yet because of the generic parameter and because
+it&rsquo;s made for view models where both view and its owner have equal access to fields.</p>
+
+<p>This is one more step towards avoid unbounded queued events in the app. Using a mailbox allows to act on certain
+events a bit later than they were emitted.</p>
+
+                        <a href="Classes/SimpleMailbox.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/SimpleEventGroupObserver" class="dashAnchor"></a>
+                    <a class="token" href="#/">SimpleEventGroupObserver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You pass an array of <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code>&lsquo;s and it listens to them all.</p>
+
+<p>It will collect all events that occur and forward them to a single callback. If you supply
+a <code>debounceTimeout</code> it will also debounce events. You can supply a specific policy for
+the debounce method.</p>
+
+<p><strong>Debounce Policy:</strong></p>
+
+<ul>
+<li><code>default</code> will reset the timer every time one of the events trigger;</li>
+<li><code>debounceLeading</code> will trigger the first time, but will ignore all future triggers for the duration of <code>debounceTimeout</code>;</li>
+<li><code>throttle</code> will trigger events at most every <code>debounceTimeout</code> seconds.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">observer</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span><span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// If any of the events trigger at the same time, we get only a single callback.</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">debounceObserver</span> <span class="o">=</span> <span class="kt">SimpleEventGroupObserver</span><span class="p">(</span>
+    <span class="nv">events</span><span class="p">:</span> <span class="n">event1</span><span class="p">,</span> <span class="n">event2</span><span class="p">,</span> <span class="n">event3</span><span class="p">,</span>
+    <span class="nv">debounceTimeout</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="nv">debouncePolicy</span><span class="p">:</span> <span class="o">.</span><span class="n">throttle</span>
+<span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="c1">// If every event triggers at random within 1 seconds, this callback will be called</span>
+    <span class="c1">// at most every 0.1 seconds.</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Classes/SimpleEventGroupObserver.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/ObserverHub" class="dashAnchor"></a>
+                    <a class="token" href="#/">ObserverHub</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Helps with implementation of &ldquo;observable&rdquo; objects.</p>
+
+<p>(Swift version of <code><a href="Classes/MMMObserverHub.html">MMMObserverHub</a></code>, type-safe and does not require your observers or observer protocols
+to be ObjC-compatible.)</p>
+
+<p>Properties:</p>
+
+<ul>
+<li>Observers are referenced weakly.</li>
+<li>If an observer is added/removed during a notification cycle, then it won&rsquo;t be called during this cycle.</li>
+<li>As usual, thread-safety (if ever needed) should be handled by the user of the class.</li>
+</ul>
+
+<p>Flags the following conditions in debug builds:</p>
+
+<ul>
+<li>Observers added more than once.</li>
+<li>Observers not being of reference types (so structs cannot be accidentally installed as observers).</li>
+<li>Observers removed more than once (or tried to be removed without being added first).</li>
+<li>Observers not explicitly removed before their deallocation.</li>
+<li>Nested notification cycles.</li>
+</ul>
+
+                        <a href="Classes/ObserverHub.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/SimpleEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/">SimpleEvent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Helps to notify multiple parties about something interesting.</p>
+
+<p>(Consider using <code><a href="Classes/LazySimpleEvent.html">LazySimpleEvent</a></code> instead which coalesces notifications and defers them to the next run loop cycle
+completely avoiding nested notifications.)</p>
+
+<p>Typically only <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code> part of this object is exposed to the &ldquo;outside users&rdquo; of your class
+or protocol while the whole object is hidden and is controlled only by your implementation.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This class (as most of the others) is <em>not</em> supposed to be thread-safe on its own.
+
+</div>
+
+                        <a href="Classes/SimpleEvent.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Class/LazySimpleEvent" class="dashAnchor"></a>
+                    <a class="token" href="#/">LazySimpleEvent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Another implementation of <code><a href="Protocols/SimpleEventObservable.html">SimpleEventObservable</a></code> that automatically coalesces all calls to <code>trigger()</code>
+waking up the observers only once on the next cycle of the given dispatch queue (main by default).</p>
+
+<p>This way <code><a href="Classes/SimpleEvent.html">SimpleEvent</a></code>&lsquo;s <code>coalescingNotifications()</code> is not needed here and the issue with nested calls
+is automatically avoided.</p>
+
+                        <a href="Classes/LazySimpleEvent.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

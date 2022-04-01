@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SimpleEventObservable Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/SimpleEventObservable" class="dashAnchor"></a>
+    <a title="SimpleEventObservable Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">MMMObservables Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        SimpleEventObservable Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ObserverHub.html">ObserverHub</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEvent.html">SimpleEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SimpleEventObservable</h1>
+            <p>A point where multiple observers can register to be notified when the corresponding object or its parts
+might need attention (aka &lsquo;signal&rsquo;, &lsquo;event&rsquo;, etc in other libs).</p>
+
+<p>Note that the observers might be notified much later than the actual event happened and multiple &ldquo;need attention&rdquo;
+events might be combined into one. Use regular observers/delegates in case every event counts or needs to be reacted
+upon immediately.</p>
+
+<p>This is the only part of the actual implementation that should be visible to the outside users of your objects
+(see <code><a href="../Classes/SimpleEvent.html">SimpleEvent</a></code> and <code><a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a></code>).</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Alias/ObserverBlock" class="dashAnchor"></a>
+                    <a class="token" href="#/">ObserverBlock</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The argument of the closure is the object that was used with <code>addObserver()</code>.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/addObserver(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">addObserver(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds the given closure into the list of parties to be notified when the corresponding event happens.
+Returns a token that should be kept while there is an interest in the events.</p>
+
+<p>The observer is automatically removed when the token is deallocated. You can also remove the observer
+explicitly via the token&rsquo;s <code>remove()</code> method.</p>
+
+<p>In the first version of this API the token was a normal return value, but that was distracting attention from
+the event itself on the calling site and it made it easier to forget to keep the token.</p>
+
+<p>Compare this:</p>
+<pre class="highlight swift"><code><span class="n">yourObject</span><span class="o">.</span><span class="n">changeEvent</span><span class="o">.</span><span class="nf">addObserver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">yourObjectChangeToken</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>with the initial version:</p>
+<pre class="highlight swift"><code><span class="n">yourObjectChangeToken</span> <span class="o">=</span> <span class="n">yourObject</span><span class="o">.</span><span class="n">changeEvent</span><span class="o">.</span><span class="n">addObserver</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The initial version has a benefit when <code>yourObject</code> is an optional however.
+In this case <code>yourObject?.changeEvent.addObserver</code> always returns something and thus
+is going to update <code>yourObjectChangeToken</code> in any case ensuring you are unsubscribed if <code>yourObjectChangeToken</code>
+had something before. See the version added on the extension of this protocol.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/addObserver(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">addObserver(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a &ldquo;delegate-style&rdquo; observer into the list of parties to be notified when the corresponding event happens.
+As usual with delegates only a weak reference to them is kept.</p>
+
+<p>You must remove the observer explicitly by calling <code>removeObserver()</code> exactly once.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <ul>
+<li>The same object cannot be added more than once.</li>
+<li>If the observer object is deallocated before it is removed, then a corresponding assertion might fire
+in Debug when other observers are added/removed or notifications are made.</li>
+</ul>
+
+</div>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>A version of <code>addObserver()</code> that returns the token instead of updating one by reference.</p>
+
+<p>This is more convenient when the observable object might be <code>nil</code>: your token is updated in any case
+ensuring you are not subscribed to the previous object.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/removeObserver(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">removeObserver(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Removes the observer added earlier via <code>addObserver()</code>. Should be called exactly once.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
