@@ -4,7 +4,7 @@
     <title>SimpleMailbox Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
@@ -13,82 +13,83 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
+
     <a name="//apple_ref/swift/Class/SimpleMailbox" class="dashAnchor"></a>
+
     <a title="SimpleMailbox Class Reference"></a>
-    <header>
-      <div class="content-wrapper">
-        <p><a href="../index.html">MMMObservables 1.5.0 Docs</a> (91% documented)</p>
-        <div class="header-right">
-          <form role="search" action="../search.json">
-            <input type="text" placeholder="Search documentation" data-typeahead>
-          </form>
-        </div>
-      </div>
+
+    <header class="header">
+      <a href="https://media.monks.com">
+        <img src="../img/logo.png" srcset="../img/logo@2x.png 2x" alt="Media.Monks" class="header-logo" />
+      </a>
+    
+    
     </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">MMMObservables Reference</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      SimpleMailbox Class Reference
+    </p>
+
     <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="../index.html">MMMObservables Reference</a>
-        <img id="carat" src="../img/carat.png" alt=""/>
-        SimpleMailbox Class Reference
-      </p>
-    </div>
-    <div class="content-wrapper">
-      <nav class="sidebar">
+      <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="../Classes.html">Classes</a>
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
+                <a class="nav-group-task-link" href="../Classes/CoalescingCallback.html">CoalescingCallback</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
+                <a class="nav-group-task-link" href="../Classes/LazySimpleEvent.html">LazySimpleEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
+                <a class="nav-group-task-link" href="../Classes/MMMObserverHub.html">MMMObserverHub</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/ObserverHub.html">ObserverHub</a>
+                <a class="nav-group-task-link" href="../Classes/ObserverHub.html">ObserverHub</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SimpleEvent.html">SimpleEvent</a>
+                <a class="nav-group-task-link" href="../Classes/SimpleEvent.html">SimpleEvent</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
+                <a class="nav-group-task-link" href="../Classes/SimpleEventGroupObserver.html">SimpleEventGroupObserver</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
+                <a class="nav-group-task-link" href="../Classes/SimpleEventGroupObserver/DebouncePolicy.html">– DebouncePolicy</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
+                <a class="nav-group-task-link" href="../Classes/SimpleEventProxy.html">SimpleEventProxy</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
+                <a class="nav-group-task-link" href="../Classes/SimpleMailbox.html">SimpleMailbox</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Protocols.html">Protocols</a>
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
+                <a class="nav-group-task-link" href="../Protocols/MMMObserverToken.html">MMMObserverToken</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
+                <a class="nav-group-task-link" href="../Protocols/SimpleEventObservable.html">SimpleEventObservable</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
+                <a class="nav-group-task-link" href="../Protocols/SimpleEventObserver.html">SimpleEventObserver</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
+                <a class="nav-group-task-link" href="../Protocols/SimpleEventToken.html">SimpleEventToken</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-        <section>
-          <section class="section">
+
+        <section class="section">
+          <div class="section-content top-matter">
             <h1>SimpleMailbox</h1>
             <p>A box where somebody can put a value replacing whatever was there before, and somebody else can later check it
 and/or take with them. (Essentially a non-blocking, non-thread-safe queue of 1 element.)</p>
@@ -101,10 +102,13 @@ it&rsquo;s made for view models where both view and its owner have equal access 
 <p>This is one more step towards avoid unbounded queued events in the app. Using a mailbox allows to act on certain
 events a bit later than they were emitted.</p>
 
-          </section>
-          <section class="section task-group-section">
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
             <div class="task-group">
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -242,13 +246,14 @@ only if the new value differs. This is when <code>T</code> is <code>Equatable</c
                 </li>
               </ul>
             </div>
-          </section>
+          </div>
         </section>
-        <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-01)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
-        </section>
+
       </article>
     </div>
+    <section class="footer">
+      <p>&copy; 2022 <a class="link" href="https://github.com/mediamonks/MMMObservables" target="_blank" rel="external noopener">MediaMonks</a>. All rights reserved. (Last updated: 2022-04-26)</p>
+      <p></p>
+    </section>
   </body>
 </html>
